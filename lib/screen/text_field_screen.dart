@@ -12,13 +12,21 @@ class TextFieldScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-    body: Center(
-      child: CustomTextFieldWidget(
-      height: 20,
-      width: 300,
-      borderColor: Colors.black,
+    return 
+
+    SafeArea(
+    child: Scaffold(
+   body: Center(
+     child: Container(
+      child: CustomTextFieldWidget(height: 10,
+      spreadRadius: 10,
+      blurRadius:50,
+     shadowColor: const Color.fromARGB(255, 210, 53, 53).withOpacity(0.5),
+      width: 150,
+       borderColor: Colors.black,
       ),
-    ),);
+     ),
+   ),
+    ));
   }
 }

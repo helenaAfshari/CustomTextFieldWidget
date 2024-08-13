@@ -1,64 +1,97 @@
-
-import 'package:customtextfield/component/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomTextFieldWidget extends StatelessWidget {
+  String? prefixText;
+  String? labelText;
   String? hintText;
   Color? hintTextColor;
   Color? boxColor;
+  Color shadowColor;
   Color borderColor;
-  Widget? myIcon;
+  SvgPicture? myIcon;
   BorderRadius? borderRadius;
   double height;
-  double width;
-  double? iconHeightScale;
-  double? iconWidthtScale;
+  double? heightScale;
+  double? widthtScale;
   double? padding;
-  CustomTextFieldWidget({Key? key, 
-    this.padding,
-    this.iconHeightScale,
-    this.iconWidthtScale,
-    this.myIcon,
-    this.boxColor,
-    required this.borderColor,
-    this.borderRadius,
-    this.hintText,
-    this.hintTextColor,
-    required this.height,
-    required this.width,
-  }) : super(key: key);
+  double? widthFactor;
+  double? heightFactor;
+  double width;
+  double spreadRadius;
+  double blurRadius;
+  double? widthContent;
+
+  CustomTextFieldWidget(
+      {super.key,
+      this.prefixText,
+      this.padding,
+      required this.spreadRadius,
+      this.heightScale,
+      required this.blurRadius,
+      this.widthContent,
+      this.widthFactor,
+      this.widthtScale,
+     required this.shadowColor,
+      this.heightFactor,
+      this.myIcon,
+      this.boxColor,
+      required this.borderColor,
+      this.borderRadius,
+      this.hintText,
+      this.hintTextColor,
+      required this.height,
+      required this.width,
+      this.labelText});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      child: TextFormField(
-        style: selectedTextFieldTextStyle,
-        decoration: InputDecoration(
-          fillColor: boxColor,
-          filled: true,
-          hintText: hintText,
-          hintStyle: TextStyle(color: hintTextColor),
-          prefixIcon: iconHeightScale != null || iconWidthtScale != null
-              ? Transform.scale(
-                  scaleX: iconWidthtScale,
-                  scaleY: iconHeightScale,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: padding ?? 0, right: padding ?? 0),
-                    child: myIcon,
-                  ),
-                )
-              : myIcon,
-          enabledBorder: OutlineInputBorder(
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            // color: Colors.grey.withOpacity(0.5),
+            color: shadowColor,
+            spreadRadius: spreadRadius,
+            blurRadius: blurRadius,
+            // offset: Offset(0, 5), // changes position of shadow
+          ),
+        ],
+      ),
+      child: SizedBox(
+        width: width,
+        child: TextFormField(
+          decoration: InputDecoration(
+            fillColor: boxColor,
+            filled: true,
+            contentPadding: EdgeInsets.only(bottom: height, left: widthContent ?? 20),
+            hintText: hintText,
+            hintStyle: TextStyle(color: hintTextColor),
+            suffixIcon: heightScale != null || widthtScale != null
+                ? Transform.scale(
+                    scaleX: widthtScale ?? 1,
+                    scaleY: heightScale ?? 1,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: padding ?? 0, right: padding ?? 0),
+                      child: myIcon,
+                    ),
+                  )
+                : myIcon,
+            labelText: labelText,
+            prefixText: prefixText,
+            enabledBorder: OutlineInputBorder(
               borderRadius: borderRadius ?? BorderRadius.zero,
-              borderSide: BorderSide(color: borderColor)),
-          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor),
+            ),
+            focusedBorder: OutlineInputBorder(
               borderRadius: borderRadius ?? BorderRadius.zero,
-              borderSide: BorderSide(color: borderColor)),
-          border: OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor),
+            ),
+            border: OutlineInputBorder(
               borderRadius: borderRadius ?? BorderRadius.zero,
-              borderSide: BorderSide(color: borderColor)),
+              borderSide: BorderSide(color: borderColor),
+            ),
+          ),
         ),
       ),
     );
